@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/plepe/openstreetbrowser-markers/issues"
   },
-  "homepage": "https://github.com/plepe/openstreetbrowser-markers#readme"
+  "homepage": "https://github.com/plepe/openstreetbrowser-markers#readme",
+  "dependencies": {
+    "overpass-layer": "^3.4.0"
+  }
 }
