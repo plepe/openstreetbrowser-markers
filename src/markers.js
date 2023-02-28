@@ -1,11 +1,15 @@
 var parseLength = require('overpass-layer/src/parseLength')
 
+function metersPerPixel () {
+  return global.map ? global.map.getMetersPerPixel() : 1
+}
+
 function cssStyle (style) {
   let ret = ''
   if ('color' in style) {
     ret += 'stroke: ' + style.color + ';'
   }
-  ret += 'stroke-width: ' + parseLength('width' in style ? style.width : '3', global.map.getMetersPerPixel()) + ';'
+  ret += 'stroke-width: ' + parseLength('width' in style ? style.width : '3', metersPerPixel()) + ';'
   if ('dashArray' in style) {
     ret += 'stroke-dasharray: ' + style.dashArray + ';'
   }
@@ -59,7 +63,7 @@ function markerLine (data) {
   let ret = '<svg anchorX="13" anchorY="8" width="25" height="' + height + '">'
 
   styles.forEach(style => {
-    let y = halfHeight + parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
+    let y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel())
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
@@ -78,7 +82,7 @@ function markerPolygon (data) {
   let ret = '<svg anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
-    let offset = parseLength('offset' in style ? style.offset : 0, global.map.getMetersPerPixel())
+    let offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
 
     ret += '<rect x="' + (halfHeight + offset) + '" y="' + (halfHeight + offset) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"/>'
   })
