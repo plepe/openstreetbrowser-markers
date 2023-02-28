@@ -1,4 +1,3 @@
-var OverpassLayer = require('overpass-layer')
 var parseLength = require('overpass-layer/src/parseLength')
 
 function cssStyle (style) {
@@ -67,7 +66,7 @@ function markerLine (data) {
 
   ret += '</svg>'
 
-  return OverpassLayer.twig.filters.raw(ret)
+  return ret
 }
 
 function markerPolygon (data) {
@@ -86,7 +85,7 @@ function markerPolygon (data) {
 
   ret += '</svg>'
 
-  return OverpassLayer.twig.filters.raw(ret)
+  return ret
 }
 
 function markerCircle (data) {
@@ -104,7 +103,7 @@ function markerCircle (data) {
 
   ret += '</svg>'
 
-  return OverpassLayer.twig.filters.raw(ret)
+  return ret
 }
 
 function markerPointer (data) {
@@ -118,7 +117,7 @@ function markerPointer (data) {
 
   ret += '</svg>'
 
-  return OverpassLayer.twig.filters.raw(ret)
+  return ret
 }
 
 function parseOptions (data) {
@@ -155,11 +154,6 @@ function parseOptions (data) {
 
   return data.styles.map(k => (k === 'default' ? data.style : data['style:' + k]) || {})
 }
-
-OverpassLayer.twig.extendFunction('markerLine', markerLine)
-OverpassLayer.twig.extendFunction('markerCircle', markerCircle)
-OverpassLayer.twig.extendFunction('markerPointer', markerPointer)
-OverpassLayer.twig.extendFunction('markerPolygon', markerPolygon)
 
 module.exports = {
   line: markerLine,
