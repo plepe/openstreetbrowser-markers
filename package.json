@@ -4,6 +4,7 @@
   "description": "Markers for OpenStreetBrowser",
   "main": "src/markers.js",
   "scripts": {
+    "lint": "standard --fix src/*.js test/*.js test/src/*.js",
     "test": "mocha"
   },
   "repository": {
@@ -20,6 +21,7 @@
     "overpass-layer": "^3.4.0"
   },
   "devDependencies": {
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "standard": "^17.0.0"
   }
 }

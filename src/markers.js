@@ -1,4 +1,4 @@
-var parseLength = require('overpass-layer/src/parseLength')
+const parseLength = require('overpass-layer/src/parseLength')
 
 function metersPerPixel () {
   return global.map ? global.map.getMetersPerPixel() : 1
@@ -41,7 +41,7 @@ function cssStyle (style) {
 }
 
 function getHalfHeight (data) {
-  let styles = parseOptions(data)
+  const styles = parseOptions(data)
 
   let halfHeight = 8
   styles.forEach(style => {
@@ -55,7 +55,7 @@ function getHalfHeight (data) {
 }
 
 function markerLine (data) {
-  let styles = parseOptions(data)
+  const styles = parseOptions(data)
 
   const halfHeight = getHalfHeight(data)
   const height = halfHeight * 2 + 1
@@ -63,7 +63,7 @@ function markerLine (data) {
   let ret = '<svg anchorX="13" anchorY="8" width="25" height="' + height + '">'
 
   styles.forEach(style => {
-    let y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel())
+    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel())
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
@@ -74,7 +74,7 @@ function markerLine (data) {
 }
 
 function markerPolygon (data) {
-  let styles = parseOptions(data)
+  const styles = parseOptions(data)
   const halfHeight = getHalfHeight(data)
   const halfWidth = Math.max(9, halfHeight + 3)
   const height = (halfHeight + halfWidth) * 2 + 1
@@ -82,7 +82,7 @@ function markerPolygon (data) {
   let ret = '<svg anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
-    let offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
+    const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
 
     ret += '<rect x="' + (halfHeight + offset) + '" y="' + (halfHeight + offset) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"/>'
   })
@@ -93,9 +93,9 @@ function markerPolygon (data) {
 }
 
 function markerCircle (data) {
-  let styles = parseOptions(data)
+  const styles = parseOptions(data)
 
-  let c = styles
+  const c = styles
     .map(style => (style.size || style.radius || 12) + (style.width / 2))
     .sort()[0]
 
@@ -113,7 +113,7 @@ function markerCircle (data) {
 function markerPointer (data) {
   let ret = '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31">'
 
-  let styles = parseOptions(data)
+  const styles = parseOptions(data)
 
   styles.forEach(style => {
     ret += '<path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="' + cssStyle(style) + '"/>'
@@ -125,9 +125,9 @@ function markerPointer (data) {
 }
 
 function parseOptions (data) {
-  if (!data || !('style' in data) && !('styles' in data)) {
-    let ret = [
-      { fillColor: '#f2756a', color: '#000000', width: 1, radius: 12, fillOpacity: 1 },
+  if (!data || (!('style' in data) && !('styles' in data))) {
+    const ret = [
+      { fillColor: '#f2756a', color: '#000000', width: 1, radius: 12, fillOpacity: 1 }
     ]
 
     if (data && data.color) {
@@ -135,8 +135,10 @@ function parseOptions (data) {
       ret[0].fillOpacity = 0.2
     }
 
-    if (data) for (let k in data) {
-      ret[0][k] = data[k]
+    if (data) {
+      for (const k in data) {
+        ret[0][k] = data[k]
+      }
     }
 
     return ret
@@ -145,14 +147,13 @@ function parseOptions (data) {
   if (!('styles' in data)) {
     data = {
       style: data,
-      styles: [ 'default' ]
+      styles: ['default']
     }
   }
 
   if (typeof data.styles === 'string') {
     data.styles = data.styles.split(/,/g)
-  }
-  else if (!data.styles) {
+  } else if (!data.styles) {
     data.styles = []
   }
 
