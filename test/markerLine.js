@@ -7,8 +7,12 @@ describe('markerLine', function () {
     test(markers.line, 'line1', {}, callback)
   })
 
-  it('color and width', function (callback) {
-    test(markers.line, 'line2', { color: 'red', width: 5 }, callback)
+  it('color and odd width', function (callback) {
+    test(markers.line, 'line2a', { color: 'red', width: 5 }, callback)
+  })
+
+  it('color and even width', function (callback) {
+    test(markers.line, 'line2b', { color: 'red', width: 6 }, callback)
   })
 
   it('offset', function (callback) {

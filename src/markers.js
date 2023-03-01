@@ -45,12 +45,20 @@ function markerLine (data) {
   const styles = parseOptions(data)
 
   const halfHeight = getHalfHeight(styles)
+  const countEvenStyles = styles
+    .filter(style => Math.round(style.width + Math.abs(style.offset || 0)) % 2 == 0)
+    .length
+  const countOddStyles = styles
+    .filter(style => Math.round(style.width + Math.abs(style.offset || 0)) % 2 == 1)
+    .length
+  const shiftOdd = countOddStyles > countEvenStyles ? 1 : 0
+
   const height = halfHeight * 2 + 1
 
   let ret = '<svg anchorX="13" anchorY="8" width="25" height="' + height + '">'
 
   styles.forEach(style => {
-    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel())
+    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel()) + shiftOdd / 2
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
   })
