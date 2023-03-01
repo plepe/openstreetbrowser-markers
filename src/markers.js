@@ -55,7 +55,7 @@ function markerLine (data) {
 
   const height = halfHeight * 2 + 1
 
-  let ret = '<svg anchorX="13" anchorY="8" width="25" height="' + height + '">'
+  let ret = '<svg anchorX="13" anchorY="' + (halfHeight + 1) + '" width="25" height="' + height + '">'
 
   styles.forEach(style => {
     const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel()) + shiftOdd / 2
