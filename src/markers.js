@@ -99,7 +99,7 @@ function markerCircle (data) {
     .map(style => (style.size || style.radius || 12) + (style.width / 2))
     .sort()[0]
 
-  let ret = '<svg anchorX="' + (c + 0.5) + ' anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
+  let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
 
   styles.forEach(style => {
     ret += '<circle cx="' + c + '" cy="' + c + '" r="' + (style.radius || 12) + '" style="' + cssStyle(style) + '"/>'

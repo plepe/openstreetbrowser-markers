@@ -4,7 +4,7 @@ const assert = require('assert')
 module.exports = function test (fun, id, data, callback) {
   const actual = fun(data)
   fs.readFile('test/data/' + id + '.svg', (err, expected) => {
-    assert.equal(actual, expected)
+    assert.equal(actual, expected.toString())
     callback(err)
   })
 
