@@ -1,5 +1,5 @@
 module.exports = function getHalfHeight (styles) {
-  let halfHeight = 8
+  let halfHeight = 0
   styles.forEach(style => {
     const h = (style.width || 3) / 2 + Math.abs(style.offset || 0)
     if (h > halfHeight) {
@@ -7,5 +7,5 @@ module.exports = function getHalfHeight (styles) {
     }
   })
 
-  return Math.ceil(halfHeight / 2) * 2
+  return Math.ceil(halfHeight)
 }
