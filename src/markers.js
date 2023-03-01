@@ -40,9 +40,7 @@ function cssStyle (style) {
   return ret
 }
 
-function getHalfHeight (data) {
-  const styles = parseOptions(data)
-
+function getHalfHeight (styles) {
   let halfHeight = 8
   styles.forEach(style => {
     const h = (style.width || 3) / 2 + Math.abs(style.offset || 0)
@@ -57,7 +55,7 @@ function getHalfHeight (data) {
 function markerLine (data) {
   const styles = parseOptions(data)
 
-  const halfHeight = getHalfHeight(data)
+  const halfHeight = getHalfHeight(styles)
   const height = halfHeight * 2 + 1
 
   let ret = '<svg anchorX="13" anchorY="8" width="25" height="' + height + '">'
@@ -75,7 +73,7 @@ function markerLine (data) {
 
 function markerPolygon (data) {
   const styles = parseOptions(data)
-  const halfHeight = getHalfHeight(data)
+  const halfHeight = getHalfHeight(styles)
   const halfWidth = Math.max(9, halfHeight + 3)
   const height = (halfHeight + halfWidth) * 2 + 1
 
