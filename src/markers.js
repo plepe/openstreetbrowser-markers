@@ -44,10 +44,11 @@ function cssStyle (style) {
 /**
  * return a marker with a line
  * @param {Object} data - Style options
+ * @param {Object} [options] - Additional options
  * @return {string} - an SVG image
  */
-function markerLine (data) {
-  const styles = parseOptions(data)
+function markerLine (data, options = {}) {
+  const styles = parseOptions(data, options)
 
   const halfHeight = getHalfHeight(styles)
   const countEvenStyles = styles
@@ -76,10 +77,12 @@ function markerLine (data) {
 /**
  * return a marker with a polygon
  * @param {Object} data - Style options
+ * @param {Object} [options] - Additional options
  * @return {string} - an SVG image
  */
-function markerPolygon (data) {
-  const styles = parseOptions(data)
+function markerPolygon (data, options = {}) {
+  const styles = parseOptions(data, options)
+
   const halfHeight = getHalfHeight(styles)
   const halfWidth = Math.max(9, halfHeight + 3)
   const height = (halfHeight + halfWidth) * 2 + 1
@@ -100,10 +103,11 @@ function markerPolygon (data) {
 /**
  * return a marker with a circle
  * @param {Object} data - Style options
+ * @param {Object} [options] - Additional options
  * @return {string} - an SVG image
  */
-function markerCircle (data) {
-  const styles = parseOptions(data)
+function markerCircle (data, options = {}) {
+  const styles = parseOptions(data, options)
 
   const c = styles
     .map(style => (style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
@@ -123,12 +127,13 @@ function markerCircle (data) {
 /**
  * return a marker with a pointer
  * @param {Object} data - Style options
+ * @param {Object} [options] - Additional options
  * @return {string} - an SVG image
  */
-function markerPointer (data) {
-  let ret = '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31">'
+function markerPointer (data, options = {}) {
+  const styles = parseOptions(data, options)
 
-  const styles = parseOptions(data)
+  let ret = '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31">'
 
   styles.forEach(style => {
     ret += '<path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="' + cssStyle(style) + '"/>'
@@ -139,7 +144,7 @@ function markerPointer (data) {
   return ret
 }
 
-function parseOptions (data) {
+function parseOptions (data, options) {
   if (!data || (!('style' in data) && !('styles' in data))) {
     const ret = [
       { fillColor: '#f2756a', color: '#000000', width: 1, radius: 12, fillOpacity: 1 }
