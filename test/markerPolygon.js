@@ -22,4 +22,12 @@ describe('markerPolygon', function () {
       'style:sec': { color: 'blue', width: 2, offset: -3.5 }
     }, callback)
   })
+
+  it('ignoreStyles', function (callback) {
+    test(markers.polygon, 'polygon5', {
+      styles: ['default', 'sec'],
+      style: { color: 'red', width: 5 },
+      'style:sec': { color: 'blue', width: 2, offset: -3.5 }
+    }, { ignoreStyles: ['sec'] }, callback)
+  })
 })

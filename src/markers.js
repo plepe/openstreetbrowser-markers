@@ -45,6 +45,7 @@ function cssStyle (style) {
  * return a marker with a line
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
+ * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
  * @return {string} - an SVG image
  */
 function markerLine (data, options = {}) {
@@ -78,6 +79,7 @@ function markerLine (data, options = {}) {
  * return a marker with a polygon
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
+ * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
  * @return {string} - an SVG image
  */
 function markerPolygon (data, options = {}) {
@@ -104,6 +106,7 @@ function markerPolygon (data, options = {}) {
  * return a marker with a circle
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
+ * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
  * @return {string} - an SVG image
  */
 function markerCircle (data, options = {}) {
@@ -128,6 +131,7 @@ function markerCircle (data, options = {}) {
  * return a marker with a pointer
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
+ * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
  * @return {string} - an SVG image
  */
 function markerPointer (data, options = {}) {
@@ -175,6 +179,10 @@ function parseOptions (data, options) {
     data.styles = data.styles.split(/,/g)
   } else if (!data.styles) {
     data.styles = []
+  }
+
+  if (options.ignoreStyles) {
+    data.styles = data.styles.filter(k => !options.ignoreStyles.includes(k))
   }
 
   return data.styles.map(k => (k === 'default' ? data.style : data['style:' + k]) || {})
