@@ -41,6 +41,11 @@ function cssStyle (style) {
   return ret
 }
 
+/**
+ * return a marker with a line
+ * @param {Object} data - Style options
+ * @return {string} - an SVG image
+ */
 function markerLine (data) {
   const styles = parseOptions(data)
 
@@ -68,6 +73,11 @@ function markerLine (data) {
   return ret
 }
 
+/**
+ * return a marker with a polygon
+ * @param {Object} data - Style options
+ * @return {string} - an SVG image
+ */
 function markerPolygon (data) {
   const styles = parseOptions(data)
   const halfHeight = getHalfHeight(styles)
@@ -87,6 +97,11 @@ function markerPolygon (data) {
   return ret
 }
 
+/**
+ * return a marker with a circle
+ * @param {Object} data - Style options
+ * @return {string} - an SVG image
+ */
 function markerCircle (data) {
   const styles = parseOptions(data)
 
@@ -105,6 +120,11 @@ function markerCircle (data) {
   return ret
 }
 
+/**
+ * return a marker with a pointer
+ * @param {Object} data - Style options
+ * @return {string} - an SVG image
+ */
 function markerPointer (data) {
   let ret = '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31">'
 
