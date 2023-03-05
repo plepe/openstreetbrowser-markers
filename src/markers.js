@@ -161,10 +161,10 @@ function markerPointer (data, options = {}) {
     const width = parseFloat(style.width)
 
     ret += '<path d="' +
-      'M' + r(width / 2) + ',' + r(size + width / 2) + ' ' +
-      'A ' + size + ',' + size + ' 0 0 1 ' + r(size * 2 + width / 2) + ',' + r(size + width / 2) + ' ' +
-      'C ' + r(size * 2 + width / 2) + ',' + r(size * 1.85 + width / 2) + ' ' + r(size * 1.05 + width / 2) + ',' + r(size * 2.75 + width / 2) + ' ' + r(size + width / 2) + ',' + r(size * 3.75 + width / 2) + ' ' +
-      'C ' + r(size * 0.95 + width / 2) + ',' + r(size * 2.75 + width / 2) + ' ' + r(width / 2) + ',' + r(size * 1.85 + width / 2) + ' ' + r(width / 2) + ',' + r(size + width / 2) +
+      'M' + r(width / 2) + ',' + c + ' ' +
+      'A ' + size + ',' + size + ' 0 0 1 ' + (c + size) + ',' + c + ' ' +
+      'C ' + (c + size) + ',' + r(c + size * 0.85) + ' ' + r(c + size * 0.05) + ',' + r(c + size * 1.75) + ' ' + c + ',' + r(c + size * 2.75) + ' ' +
+      'C ' + r(c - size * 0.05) + ',' + r(c + size * 1.75) + ' ' + r(width / 2) + ',' + r(c + size * 0.85) + ' ' + (width / 2) + ',' + c +
       '" style="' + cssStyle(style) + '"/>'
   })
 
