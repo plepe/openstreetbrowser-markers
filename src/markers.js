@@ -150,10 +150,22 @@ function markerCircle (data, options = {}) {
 function markerPointer (data, options = {}) {
   const styles = parseOptions(data, options)
 
-  let ret = '<svg anchorX="13" anchorY="45" width="25" height="45" signAnchorX="0" signAnchorY="-31">'
+  const c = styles
+    .map(style => (style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
+    .sort()[0]
+
+  let ret = '<svg anchorX="13" anchorY="46" width="25" height="46" signAnchorX="0" signAnchorY="-31">'
 
   styles.forEach(style => {
-    ret += '<path d="M0.5,12.5 A 12,12 0 0 1 24.5,12.5 C 24.5,23 13,30 12.5,44.5 C 12,30 0.5,23 0.5,12.5" style="' + cssStyle(style) + '"/>'
+    const size = parseFloat(style.size || style.radius || 12)
+    const width = parseFloat(style.width)
+
+    ret += '<path d="' +
+      'M' + (width / 2) + ',' + (size + width / 2) + ' ' +
+      'A ' + size + ',' + size + ' 0 0 1 ' + (size * 2 + width / 2) + ',' + (size + width / 2) + ' ' +
+      'C ' + (size * 2 + width / 2) + ',' + (size * 1.85 + width / 2) + ' ' + (size * 1.05 + width / 2) + ',' + (size * 2.75 + width / 2) + ' ' + (size + width / 2) + ',' + (size * 3.75 + width / 2) + ' ' +
+      'C ' + (size * 0.95 + width / 2) + ',' + (size * 2.75 + width / 2) + ' ' + (width / 2) + ',' + (size * 1.85 + width / 2) + ' ' + (width / 2) + ',' + (size + width / 2) +
+      '" style="' + cssStyle(style) + '"/>'
   })
 
   ret += '</svg>'
