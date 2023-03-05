@@ -161,10 +161,10 @@ function markerPointer (data, options = {}) {
     const width = parseFloat(style.width)
 
     ret += '<path d="' +
-      'M' + (width / 2) + ',' + (size + width / 2) + ' ' +
-      'A ' + size + ',' + size + ' 0 0 1 ' + (size * 2 + width / 2) + ',' + (size + width / 2) + ' ' +
-      'C ' + (size * 2 + width / 2) + ',' + (size * 1.85 + width / 2) + ' ' + (size * 1.05 + width / 2) + ',' + (size * 2.75 + width / 2) + ' ' + (size + width / 2) + ',' + (size * 3.75 + width / 2) + ' ' +
-      'C ' + (size * 0.95 + width / 2) + ',' + (size * 2.75 + width / 2) + ' ' + (width / 2) + ',' + (size * 1.85 + width / 2) + ' ' + (width / 2) + ',' + (size + width / 2) +
+      'M' + r(width / 2) + ',' + r(size + width / 2) + ' ' +
+      'A ' + size + ',' + size + ' 0 0 1 ' + r(size * 2 + width / 2) + ',' + r(size + width / 2) + ' ' +
+      'C ' + r(size * 2 + width / 2) + ',' + r(size * 1.85 + width / 2) + ' ' + r(size * 1.05 + width / 2) + ',' + r(size * 2.75 + width / 2) + ' ' + r(size + width / 2) + ',' + r(size * 3.75 + width / 2) + ' ' +
+      'C ' + r(size * 0.95 + width / 2) + ',' + r(size * 2.75 + width / 2) + ' ' + r(width / 2) + ',' + r(size * 1.85 + width / 2) + ' ' + r(width / 2) + ',' + r(size + width / 2) +
       '" style="' + cssStyle(style) + '"/>'
   })
 
@@ -218,4 +218,10 @@ module.exports = {
   circle: markerCircle,
   pointer: markerPointer,
   polygon: markerPolygon
+}
+
+function r (v) {
+  const r = v.toFixed(2)
+  const m = r.match(/(^\d+\.\d*)0+$/)
+  return m ? m[1] : r
 }
