@@ -11,6 +11,14 @@ describe('markerPointer', function () {
     test(markers.pointer, 'pointer2', { color: 'red', width: 5 }, callback)
   })
 
+  it('size=8', function (callback) {
+    test(markers.pointer, 'pointer-size8', { size: 8 }, callback)
+  })
+
+  it('size=9', function (callback) {
+    test(markers.pointer, 'pointer-size9', { size: 8 }, callback)
+  })
+
   it('offset', function (callback) {
     test(markers.pointer, 'pointer3', { offset: -5 }, callback)
   })
