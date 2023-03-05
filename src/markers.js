@@ -159,7 +159,7 @@ function markerPointer (data, options = {}) {
   let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + r(c + size * 2.75 + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
 
   styles.forEach(style => {
-    const size = parseFloat(style.size || style.radius || 12)
+    const size = parseFloat(style.size || style.radius || 12) + parseFloat(style.offset || 0)
 
     ret += '<path d="' +
       'M' + r(c - size) + ',' + c + ' ' +
