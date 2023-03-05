@@ -160,7 +160,6 @@ function markerPointer (data, options = {}) {
 
   styles.forEach(style => {
     const size = parseFloat(style.size || style.radius || 12)
-    const width = parseFloat(style.width)
 
     ret += '<path d="' +
       'M' + r(c - size) + ',' + c + ' ' +
