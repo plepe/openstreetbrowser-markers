@@ -151,10 +151,12 @@ function markerPointer (data, options = {}) {
   const styles = parseOptions(data, options)
 
   const c = styles
-    .map(style => (style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
+    .map(style => parseFloat(style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
+    .sort()[0]
+  const size = styles.map(style => parseFloat(style.size || style.radius || 12))
     .sort()[0]
 
-  let ret = '<svg anchorX="13" anchorY="46" width="25" height="46" signAnchorX="0" signAnchorY="-31">'
+  let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + r(c + size * 2.75 + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
 
   styles.forEach(style => {
     const size = parseFloat(style.size || style.radius || 12)
