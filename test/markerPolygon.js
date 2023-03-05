@@ -27,6 +27,10 @@ describe('markerPolygon', function () {
     test(markers.polygon, 'polygon3c', { offset: -4.5 }, callback)
   })
 
+  it('width as string', function (callback) {
+    test(markers.polygon, 'polygon-string-width', { color: 'red', width: '3' }, callback)
+  })
+
   it('two polygons', function (callback) {
     test(markers.polygon, 'polygon4', {
       styles: ['default', 'sec'],

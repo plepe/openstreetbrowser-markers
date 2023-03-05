@@ -19,6 +19,10 @@ describe('markerLine', function () {
     test(markers.line, 'line3', { offset: -5 }, callback)
   })
 
+  it('width as string', function (callback) {
+    test(markers.line, 'line-string-width', { color: 'red', width: '3' }, callback)
+  })
+
   it('two lines', function (callback) {
     test(markers.line, 'line4', {
       styles: ['default', 'sec'],

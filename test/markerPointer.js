@@ -15,6 +15,10 @@ describe('markerPointer', function () {
     test(markers.pointer, 'pointer3', { offset: -5 }, callback)
   })
 
+  it('width as string', function (callback) {
+    test(markers.pointer, 'pointer-string-width', { color: 'red', width: '3' }, callback)
+  })
+
   it('two pointers', function (callback) {
     test(markers.pointer, 'pointer4', {
       styles: ['default', 'sec'],

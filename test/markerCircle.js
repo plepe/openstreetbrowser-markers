@@ -15,6 +15,10 @@ describe('markerCircle', function () {
     test(markers.circle, 'circle3', { offset: -5 }, callback)
   })
 
+  it('width as string', function (callback) {
+    test(markers.circle, 'circle-string-width', { color: 'red', width: '3' }, callback)
+  })
+
   it('two circles', function (callback) {
     test(markers.circle, 'circle4', {
       styles: ['default', 'sec'],
