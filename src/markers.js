@@ -75,6 +75,11 @@ function markerLine (data, options = {}) {
   return ret
 }
 
+// source: https://stackoverflow.com/a/17323608
+function mod (n, m) {
+  return ((n % m) + m) % m;
+}
+
 /**
  * return a marker with a polygon
  * @param {Object} data - Style options
@@ -87,14 +92,22 @@ function markerPolygon (data, options = {}) {
 
   const halfHeight = getHalfHeight(styles)
   const halfWidth = Math.max(9, halfHeight + 3)
-  const height = (halfHeight + halfWidth) * 2 + 1
+
+  const countEvenStyles = styles
+    .filter(style => mod(Math.round(style.width + (style.offset || 0) * 2), 2) == 0)
+    .length
+  const countOddStyles = styles
+    .filter(style => mod(Math.round(style.width + (style.offset || 0) * 2), 2) == 1)
+    .length
+  const shiftOdd = countOddStyles > countEvenStyles ? -0.5 : 0
+  const height = (halfHeight + halfWidth) * 2 - (countOddStyles > countEvenStyles ? 1 : 0)
 
   let ret = '<svg anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
     const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
 
-    ret += '<rect x="' + (halfHeight + offset) + '" y="' + (halfHeight + offset) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"/>'
+    ret += '<rect x="' + (halfHeight + offset + shiftOdd) + '" y="' + (halfHeight + offset + shiftOdd) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"/>'
   })
 
   ret += '</svg>'

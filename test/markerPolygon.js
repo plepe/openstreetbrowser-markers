@@ -7,12 +7,24 @@ describe('markerPolygon', function () {
     test(markers.polygon, 'polygon1', {}, callback)
   })
 
-  it('color and width', function (callback) {
-    test(markers.polygon, 'polygon2', { color: 'red', width: 5 }, callback)
+  it('color and width 4', function (callback) {
+    test(markers.polygon, 'polygon2a', { color: 'red', width: 4 }, callback)
   })
 
-  it('offset', function (callback) {
-    test(markers.polygon, 'polygon3', { offset: -5 }, callback)
+  it('color and width 5', function (callback) {
+    test(markers.polygon, 'polygon2b', { color: 'red', width: 5 }, callback)
+  })
+
+  it('offset -4', function (callback) {
+    test(markers.polygon, 'polygon3a', { offset: -4 }, callback)
+  })
+
+  it('offset -5', function (callback) {
+    test(markers.polygon, 'polygon3b', { offset: -5 }, callback)
+  })
+
+  it('offset -4.5', function (callback) {
+    test(markers.polygon, 'polygon3c', { offset: -4.5 }, callback)
   })
 
   it('two polygons', function (callback) {
