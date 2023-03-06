@@ -151,13 +151,13 @@ function markerPointer (data, options = {}) {
   const styles = parseOptions(data, options)
 
   const c = styles
-    .map(style => parseFloat(style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
+    .map(style => parseFloat(style.size || style.radius || 12) + parseFloat(style.width / 2) + parseFloat(style.offset || 0))
     .sort()[0]
   const size = styles.map(style => parseFloat(style.size || style.radius || 12))
     .sort()[0]
-  const height = r(size * 2.75 + c)
+  const height = size * 2.75 + c
 
-  let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + (height + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
+  let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + r(height + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
 
   styles.forEach(style => {
     const size = parseFloat(style.size || style.radius || 12) + parseFloat(style.offset || 0)
@@ -165,7 +165,7 @@ function markerPointer (data, options = {}) {
     ret += '<path d="' +
       'M' + r(c - size) + ',' + c + ' ' +
       'A ' + size + ',' + size + ' 0 0 1 ' + (c + size) + ',' + c + ' ' +
-      'C ' + (c + size) + ',' + r(c + size * 0.85) + ' ' + r(c + size * 0.05) + ',' + r(c + size * 1.75) + ' ' + c + ',' + height + ' ' +
+      'C ' + (c + size) + ',' + r(c + size * 0.85) + ' ' + r(c + size * 0.05) + ',' + r(c + size * 1.75) + ' ' + c + ',' + r(height) + ' ' +
       'C ' + r(c - size * 0.05) + ',' + r(c + size * 1.75) + ' ' + r(c - size) + ',' + r(c + size * 0.85) + ' ' + (c - size) + ',' + c +
       '" style="' + cssStyle(style) + '"/>'
   })
