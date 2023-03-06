@@ -53,10 +53,10 @@ function markerLine (data, options = {}) {
 
   const halfHeight = getHalfHeight(styles)
   const countEvenStyles = styles
-    .filter(style => Math.round(parseFloat(style.width) + Math.abs(style.offset || 0)) % 2 == 0)
+    .filter(style => Math.round(parseFloat(style.width) + Math.abs(style.offset || 0)) % 2 === 0)
     .length
   const countOddStyles = styles
-    .filter(style => Math.round(parseFloat(style.width) + Math.abs(style.offset || 0)) % 2 == 1)
+    .filter(style => Math.round(parseFloat(style.width) + Math.abs(style.offset || 0)) % 2 === 1)
     .length
   const shiftOdd = countOddStyles > countEvenStyles ? 1 : 0
 
@@ -77,7 +77,7 @@ function markerLine (data, options = {}) {
 
 // source: https://stackoverflow.com/a/17323608
 function mod (n, m) {
-  return ((n % m) + m) % m;
+  return ((n % m) + m) % m
 }
 
 /**
@@ -94,10 +94,10 @@ function markerPolygon (data, options = {}) {
   const halfWidth = Math.max(9, halfHeight + 3)
 
   const countEvenStyles = styles
-    .filter(style => mod(Math.round(parseFloat(style.width) + parseFloat(style.offset || 0) * 2), 2) == 0)
+    .filter(style => mod(Math.round(parseFloat(style.width) + parseFloat(style.offset || 0) * 2), 2) === 0)
     .length
   const countOddStyles = styles
-    .filter(style => mod(Math.round(parseFloat(style.width) + parseFloat(style.offset || 0) * 2), 2) == 1)
+    .filter(style => mod(Math.round(parseFloat(style.width) + parseFloat(style.offset || 0) * 2), 2) === 1)
     .length
   const shiftOdd = countOddStyles > countEvenStyles ? -0.5 : 0
   const height = (halfHeight + halfWidth) * 2 - (countOddStyles > countEvenStyles ? 1 : 0)
