@@ -29,7 +29,7 @@ It could also be the structure that [overpass-layer](https://github.com/plepe/ov
 {
   "styles": "default,side",
   "style": {
-    "width: 4,
+    "width": 4,
     "color": "#ff0000"
   },
   "style:side": {
