@@ -23,5 +23,8 @@
   "devDependencies": {
     "mocha": "^10.2.0",
     "standard": "^17.0.0"
-  }
+  },
+  "files": [
+    "src"
+  ]
 }
