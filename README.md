@@ -55,7 +55,8 @@ Style parameters:
 | fill | boolean | true | whether to fill the path with color. Set it to false or empty string to disable filling on polygons or circles.
 | fillColor | color | *value of 'color'* | Fill color. Defaults to the value of the color option.
 | fillOpacity | float | *depends* | Fill opacity. If the `fillColor` is derived from the `color`, a default value of `0.2` will be used. Otherwise, `1`.
-| radius | length | 10px | Radius of the circle.
+| radius | length | 10px | Radius of the circle (or the pointer).
+| size | length | 10px | Size of the pointer (or the circle). Radius is an alias.
 
 Types:
 | Name | Description    |
