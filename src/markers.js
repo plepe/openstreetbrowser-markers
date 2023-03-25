@@ -62,7 +62,7 @@ function markerLine (data, options = {}) {
 
   const height = halfHeight * 2 + 1
 
-  let ret = '<svg anchorX="13" anchorY="' + (halfHeight + 1) + '" width="25" height="' + height + '">'
+  let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="13" anchorY="' + (halfHeight + 1) + '" width="25" height="' + height + '">'
 
   styles.forEach(style => {
     const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel()) + shiftOdd / 2
@@ -102,7 +102,7 @@ function markerPolygon (data, options = {}) {
   const shiftOdd = countOddStyles > countEvenStyles ? -0.5 : 0
   const height = (halfHeight + halfWidth) * 2 - (countOddStyles > countEvenStyles ? 1 : 0)
 
-  let ret = '<svg anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
+  let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
     const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
@@ -129,7 +129,7 @@ function markerCircle (data, options = {}) {
     .map(style => (style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
     .sort()[0]
 
-  let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
+  let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
 
   styles.forEach(style => {
     ret += '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style) + '"/>'
@@ -157,7 +157,7 @@ function markerPointer (data, options = {}) {
     .sort()[0]
   const height = size * 2.75 + c
 
-  let ret = '<svg anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + r(height + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
+  let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + r(height + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
 
   styles.forEach(style => {
     const size = parseFloat(style.size || style.radius || 12) + parseFloat(style.offset || 0)
