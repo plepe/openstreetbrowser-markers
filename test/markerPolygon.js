@@ -15,6 +15,10 @@ describe('markerPolygon', function () {
     test(markers.polygon, 'polygon2b', { color: 'red', width: 5 }, callback)
   })
 
+  it('color, width, dashArray', function (callback) {
+    test(markers.polygon, 'polygon-dash', { color: 'red', width: 5, dashArray: '2,3' }, callback)
+  })
+
   it('offset -4', function (callback) {
     test(markers.polygon, 'polygon3a', { offset: -4 }, callback)
   })
