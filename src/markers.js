@@ -136,7 +136,8 @@ function markerCircle (data, options = {}) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
 
   styles.forEach(style => {
-    ret += '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style) + '"/>'
+    r = '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style) + '"/>'
+    ret += r
   })
 
   ret += '</svg>'
@@ -161,16 +162,16 @@ function markerPointer (data, options = {}) {
     .sort()[0]
   const height = size * 2.75 + c
 
-  let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + r(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + r(height + 0.5) + '" signAnchorX="0" signAnchorY="' + -r(size * 2.75) + '">'
+  let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + toFixed2(c + size * 2.75 + 0.5) + '" width="' + (c * 2) + '" height="' + toFixed2(height + 0.5) + '" signAnchorX="0" signAnchorY="' + -toFixed2(size * 2.75) + '">'
 
   styles.forEach(style => {
     const size = parseFloat(style.size || style.radius || 12) + parseFloat(style.offset || 0)
 
     ret += '<path d="' +
-      'M' + r(c - size) + ',' + c + ' ' +
+      'M' + toFixed2(c - size) + ',' + c + ' ' +
       'A ' + size + ',' + size + ' 0 0 1 ' + (c + size) + ',' + c + ' ' +
-      'C ' + (c + size) + ',' + r(c + size * 0.85) + ' ' + r(c + size * 0.05) + ',' + r(c + size * 1.75) + ' ' + c + ',' + r(height) + ' ' +
-      'C ' + r(c - size * 0.05) + ',' + r(c + size * 1.75) + ' ' + r(c - size) + ',' + r(c + size * 0.85) + ' ' + (c - size) + ',' + c +
+      'C ' + (c + size) + ',' + toFixed2(c + size * 0.85) + ' ' + toFixed2(c + size * 0.05) + ',' + toFixed2(c + size * 1.75) + ' ' + c + ',' + toFixed2(height) + ' ' +
+      'C ' + toFixed2(c - size * 0.05) + ',' + toFixed2(c + size * 1.75) + ' ' + toFixed2(c - size) + ',' + toFixed2(c + size * 0.85) + ' ' + (c - size) + ',' + c +
       '" style="' + cssStyle(style) + '"/>'
   })
 
@@ -219,15 +220,13 @@ function parseOptions (data, options) {
   return data.styles.map(k => (k === 'default' ? data.style : data['style:' + k]) || {})
 }
 
+function toFixed2 (v) {
+  return v.toFixed(2)
+}
+
 module.exports = {
   line: markerLine,
   circle: markerCircle,
   pointer: markerPointer,
   polygon: markerPolygon
-}
-
-function r (v) {
-  const r = v.toFixed(2)
-  const m = r.match(/(^\d+\.\d*)0+$/)
-  return m ? m[1] : r
 }
