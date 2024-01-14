@@ -2,6 +2,7 @@ const parseLength = require('overpass-layer/src/parseLength')
 const getHalfHeight = require('./getHalfHeight')
 const metersPerPixel = require('./metersPerPixel')
 const cssStyle = require('./cssStyle')
+const patterns = require('./patterns')
 
 /**
  * return a marker with a line
@@ -30,6 +31,8 @@ function markerLine (data, options = {}) {
     const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel()) + shiftOdd / 2
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
+
+    ret += patterns([[0, y], [25, y]], style)
   })
 
   ret += '</svg>'
