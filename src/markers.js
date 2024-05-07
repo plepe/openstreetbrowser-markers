@@ -1,3 +1,4 @@
+const htmlEscape = require('html-escape')
 const parseLength = require('overpass-layer/src/parseLength')
 const getHalfHeight = require('./getHalfHeight')
 const metersPerPixel = require('./metersPerPixel')
@@ -29,7 +30,13 @@ function markerLine (data, options = {}) {
   styles.forEach(style => {
     const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel()) + shiftOdd / 2
 
-    ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"/>'
+    ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"'
+
+    if (style.title) {
+      ret += '><title>' + htmlEscape(style.title) + '</title></line>'
+    } else {
+      ret += '/>'
+    }
   })
 
   ret += '</svg>'
@@ -69,7 +76,13 @@ function markerPolygon (data, options = {}) {
   styles.forEach(style => {
     const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
 
-    ret += '<rect x="' + (halfHeight + offset + shiftOdd) + '" y="' + (halfHeight + offset + shiftOdd) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"/>'
+    ret += '<rect x="' + (halfHeight + offset + shiftOdd) + '" y="' + (halfHeight + offset + shiftOdd) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"'
+
+    if (style.title) {
+      ret += '><title>' + htmlEscape(style.title) + '</title></rect>'
+    } else {
+      ret += '/>'
+    }
   })
 
   ret += '</svg>'
@@ -94,8 +107,13 @@ function markerCircle (data, options = {}) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
 
   styles.forEach(style => {
-    const r = '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style) + '"/>'
-    ret += r
+    ret += '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style) + '"'
+
+    if (style.title) {
+      ret += '><title>' + htmlEscape(style.title) + '</title></circle>'
+    } else {
+      ret += '/>'
+    }
   })
 
   ret += '</svg>'
@@ -130,7 +148,13 @@ function markerPointer (data, options = {}) {
       'A ' + size + ',' + size + ' 0 0 1 ' + (c + size) + ',' + c + ' ' +
       'C ' + (c + size) + ',' + toFixed2(c + size * 0.85) + ' ' + toFixed2(c + size * 0.05) + ',' + toFixed2(c + size * 1.75) + ' ' + c + ',' + toFixed2(height) + ' ' +
       'C ' + toFixed2(c - size * 0.05) + ',' + toFixed2(c + size * 1.75) + ' ' + toFixed2(c - size) + ',' + toFixed2(c + size * 0.85) + ' ' + (c - size) + ',' + c +
-      '" style="' + cssStyle(style) + '"/>'
+      '" style="' + cssStyle(style) + '"'
+
+    if (style.title) {
+      ret += '><title>' + htmlEscape(style.title) + '</title></path>'
+    } else {
+      ret += '/>'
+    }
   })
 
   ret += '</svg>'

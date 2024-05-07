@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/plepe/openstreetbrowser-markers#readme",
   "dependencies": {
+    "html-escape": "^2.0.0",
     "overpass-layer": "^3.4.0"
   },
   "devDependencies": {

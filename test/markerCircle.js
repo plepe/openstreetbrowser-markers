@@ -11,6 +11,10 @@ describe('markerCircle', function () {
     test(markers.circle, 'circle2', { color: 'red', width: 5 }, callback)
   })
 
+  it('color, width, title', function (callback) {
+    test(markers.circle, 'circle-title', { color: 'red', width: 5, title: '<foo>' }, callback)
+  })
+
   it('color, width, dashArray', function (callback) {
     test(markers.circle, 'circle-dash', { color: 'red', width: 5, dashArray: '2,3' }, callback)
   })

@@ -57,6 +57,7 @@ Style parameters:
 | fillOpacity | float | *depends* | Fill opacity. If the `fillColor` is derived from the `color`, a default value of `0.2` will be used. Otherwise, `1`.
 | radius | length | 10px | Radius of the circle (or the pointer).
 | size | length | 10px | Size of the pointer (or the circle). Radius is an alias.
+| title | string | *null* | Add a tooltip.
 
 Types:
 | Name | Description    |

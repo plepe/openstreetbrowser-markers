@@ -15,6 +15,10 @@ describe('markerPointer', function () {
     test(markers.pointer, 'pointer-dash', { color: 'red', width: 5, dashArray: '2,3' }, callback)
   })
 
+  it('color, width, title', function (callback) {
+    test(markers.pointer, 'pointer-title', { color: 'red', width: 5, title: '<foo>' }, callback)
+  })
+
   it('size=8', function (callback) {
     test(markers.pointer, 'pointer-size8', { size: 8 }, callback)
   })

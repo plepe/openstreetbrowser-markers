@@ -19,6 +19,10 @@ describe('markerLine', function () {
     test(markers.line, 'line-dash', { color: 'red', width: 5, dashArray: '2,3' }, callback)
   })
 
+  it('color, width, title', function (callback) {
+    test(markers.line, 'line-title', { color: 'red', width: 5, title: '<foo>' }, callback)
+  })
+
   it('offset', function (callback) {
     test(markers.line, 'line3', { offset: -5 }, callback)
   })
