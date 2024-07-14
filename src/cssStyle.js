@@ -6,6 +6,9 @@ module.exports = function cssStyle (style) {
   if ('color' in style) {
     ret += 'stroke: ' + style.color + ';'
   }
+  if ('opacity' in style) {
+    ret += 'stroke-opacity: ' + style.opacity + ';'
+  }
   ret += 'stroke-width: ' + parseLength('width' in style ? style.width : '3', metersPerPixel()) + ';'
   if ('dashArray' in style) {
     ret += 'stroke-dasharray: ' + style.dashArray + ';'
