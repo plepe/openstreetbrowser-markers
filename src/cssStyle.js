@@ -1,7 +1,6 @@
-const parseLength = require('overpass-layer/src/parseLength')
-const metersPerPixel = require('./metersPerPixel')
+const parseLength = require('@geowiki-net/geowiki-lib-geo-functions/src/parseLength')
 
-module.exports = function cssStyle (style) {
+module.exports = function cssStyle (style, map) {
   let ret = ''
   if ('color' in style) {
     ret += 'stroke: ' + style.color + ';'
@@ -9,7 +8,7 @@ module.exports = function cssStyle (style) {
   if ('opacity' in style) {
     ret += 'stroke-opacity: ' + style.opacity + ';'
   }
-  ret += 'stroke-width: ' + parseLength('width' in style ? style.width : '3', metersPerPixel()) + ';'
+  ret += 'stroke-width: ' + parseLength('width' in style ? style.width : '3', map) + ';'
   if ('dashArray' in style) {
     ret += 'stroke-dasharray: ' + style.dashArray + ';'
   }

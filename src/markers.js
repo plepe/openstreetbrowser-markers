@@ -1,18 +1,29 @@
 const htmlEscape = require('html-escape')
-const parseLength = require('overpass-layer/src/parseLength')
+const parseLength = require('@geowiki-net/geowiki-lib-geo-functions/src/parseLength')
 const getHalfHeight = require('./getHalfHeight')
-const metersPerPixel = require('./metersPerPixel')
 const cssStyle = require('./cssStyle')
+
+function fixParameters (options, map) {
+  if (!map && options.zoom) {
+    map = options
+    options = {}
+  }
+
+  return [options, map]
+}
 
 /**
  * return a marker with a line
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
  * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
+ * @param {Object} [map] - Map information (an object with: e.g. { zoom: 12, center: { lat: 0, lon: 0 }[, metersPerPixel: 0.5] }). If not defined, it will calculate the information from the global.map object (if defined), otherwise metersPerPixel will be assumed to be 1.
  * @return {string} - an SVG image
  */
-function markerLine (data, options = {}) {
-  const styles = parseOptions(data, options)
+function markerLine (data, options = {}, map = null) {
+  [options, map] = fixParameters(options, map)
+
+  const styles = parseOptions(data, options, map)
 
   const halfHeight = getHalfHeight(styles)
   const countEvenStyles = styles
@@ -28,9 +39,9 @@ function markerLine (data, options = {}) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="13" anchorY="' + (halfHeight + 1) + '" width="25" height="' + height + '">'
 
   styles.forEach(style => {
-    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel()) + shiftOdd / 2
+    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel(map)) + shiftOdd / 2
 
-    ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style) + '"'
+    ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style, map) + '"'
 
     if (style.title) {
       ret += '><title>' + htmlEscape(style.title) + '</title></line>'
@@ -54,10 +65,13 @@ function mod (n, m) {
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
  * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
+ * @param {Object} [map] - Map information (an object with: e.g. { zoom: 12, center: { lat: 0, lon: 0 }[, metersPerPixel: 0.5] }). If not defined, it will calculate the information from the global.map object (if defined), otherwise metersPerPixel will be assumed to be 1.
  * @return {string} - an SVG image
  */
-function markerPolygon (data, options = {}) {
-  const styles = parseOptions(data, options)
+function markerPolygon (data, options = {}, map = null) {
+  [options, map] = fixParameters(options, map)
+
+  const styles = parseOptions(data, options, map)
 
   const halfHeight = getHalfHeight(styles)
   const halfWidth = Math.max(9, halfHeight + 3)
@@ -74,9 +88,9 @@ function markerPolygon (data, options = {}) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
-    const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel())
+    const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel(map))
 
-    ret += '<rect x="' + (halfHeight + offset + shiftOdd) + '" y="' + (halfHeight + offset + shiftOdd) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style) + '"'
+    ret += '<rect x="' + (halfHeight + offset + shiftOdd) + '" y="' + (halfHeight + offset + shiftOdd) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style, map) + '"'
 
     if (style.title) {
       ret += '><title>' + htmlEscape(style.title) + '</title></rect>'
@@ -95,10 +109,13 @@ function markerPolygon (data, options = {}) {
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
  * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
+ * @param {Object} [map] - Map information (an object with: e.g. { zoom: 12, center: { lat: 0, lon: 0 }[, metersPerPixel: 0.5] }). If not defined, it will calculate the information from the global.map object (if defined), otherwise metersPerPixel will be assumed to be 1.
  * @return {string} - an SVG image
  */
-function markerCircle (data, options = {}) {
-  const styles = parseOptions(data, options)
+function markerCircle (data, options = {}, map = null) {
+  [options, map] = fixParameters(options, map)
+
+  const styles = parseOptions(data, options, map)
 
   const c = styles
     .map(style => (style.size || style.radius || 12) + (style.width / 2) + (style.offset || 0))
@@ -107,7 +124,7 @@ function markerCircle (data, options = {}) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (c + 0.5) + '" anchorY="' + (c + 0.5) + '" width="' + (c * 2) + '" height="' + (c * 2) + '">'
 
   styles.forEach(style => {
-    ret += '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style) + '"'
+    ret += '<circle cx="' + c + '" cy="' + c + '" r="' + ((style.radius || 12) + (style.offset || 0)) + '" style="' + cssStyle(style, map) + '"'
 
     if (style.title) {
       ret += '><title>' + htmlEscape(style.title) + '</title></circle>'
@@ -126,10 +143,13 @@ function markerCircle (data, options = {}) {
  * @param {Object} data - Style options
  * @param {Object} [options] - Additional options
  * @param {string[]} [options.ignoreStyles] - List of style id's which should be ignored (e.g. ['hover'])
+ * @param {Object} [map] - Map information (an object with: e.g. { zoom: 12, center: { lat: 0, lon: 0 }[, metersPerPixel: 0.5] }). If not defined, it will calculate the information from the global.map object (if defined), otherwise metersPerPixel will be assumed to be 1.
  * @return {string} - an SVG image
  */
-function markerPointer (data, options = {}) {
-  const styles = parseOptions(data, options)
+function markerPointer (data, options = {}, map) {
+  [options, map] = fixParameters(options, map)
+
+  const styles = parseOptions(data, options, map)
 
   const c = styles
     .map(style => parseFloat(style.size || style.radius || 12) + parseFloat(style.width / 2) + parseFloat(style.offset || 0))
@@ -148,7 +168,7 @@ function markerPointer (data, options = {}) {
       'A ' + size + ',' + size + ' 0 0 1 ' + (c + size) + ',' + c + ' ' +
       'C ' + (c + size) + ',' + toFixed2(c + size * 0.85) + ' ' + toFixed2(c + size * 0.05) + ',' + toFixed2(c + size * 1.75) + ' ' + c + ',' + toFixed2(height) + ' ' +
       'C ' + toFixed2(c - size * 0.05) + ',' + toFixed2(c + size * 1.75) + ' ' + toFixed2(c - size) + ',' + toFixed2(c + size * 0.85) + ' ' + (c - size) + ',' + c +
-      '" style="' + cssStyle(style) + '"'
+      '" style="' + cssStyle(style, map) + '"'
 
     if (style.title) {
       ret += '><title>' + htmlEscape(style.title) + '</title></path>'
@@ -162,7 +182,7 @@ function markerPointer (data, options = {}) {
   return ret
 }
 
-function parseOptions (data, options) {
+function parseOptions (data, options, map) {
   if (!data || (!('style' in data) && !('styles' in data))) {
     const ret = [
       { fillColor: '#f2756a', color: '#000000', width: 1, radius: 12, fillOpacity: 1 }
