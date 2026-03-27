@@ -4,9 +4,13 @@ const getHalfHeight = require('./getHalfHeight')
 const cssStyle = require('./cssStyle')
 
 function fixParameters (options, map) {
-  if (!map && options.zoom) {
-    map = options
-    options = {}
+  if (!map) {
+    if (options.zoom) {
+      map = options
+      options = {}
+    } else {
+      map = {}
+    }
   }
 
   return [options, map]
@@ -39,7 +43,7 @@ function markerLine (data, options = {}, map = null) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="13" anchorY="' + (halfHeight + 1) + '" width="25" height="' + height + '">'
 
   styles.forEach(style => {
-    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, metersPerPixel(map)) + shiftOdd / 2
+    const y = halfHeight + parseLength('offset' in style ? style.offset : 0, map) + shiftOdd / 2
 
     ret += '<line x1="0" y1="' + y + '" x2="25" y2="' + y + '" style="' + cssStyle(style, map) + '"'
 
@@ -88,7 +92,7 @@ function markerPolygon (data, options = {}, map = null) {
   let ret = '<svg xmlns="http://www.w3.org/2000/svg" anchorX="' + (halfHeight + halfWidth + 1) + '" anchorY="' + (halfHeight + halfWidth + 1) + '" width="' + height + '" height="' + height + '">'
 
   styles.forEach(style => {
-    const offset = parseLength('offset' in style ? style.offset : 0, metersPerPixel(map))
+    const offset = parseLength('offset' in style ? style.offset : 0, map)
 
     ret += '<rect x="' + (halfHeight + offset + shiftOdd) + '" y="' + (halfHeight + offset + shiftOdd) + '" width="' + ((halfWidth - offset) * 2) + '" height="' + ((halfWidth - offset) * 2) + '" style="' + cssStyle(style, map) + '"'
 
